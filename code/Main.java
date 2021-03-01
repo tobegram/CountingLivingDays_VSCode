@@ -1,5 +1,6 @@
+package code;
 
-    import java.awt.EventQueue;
+import java.awt.EventQueue;
 
     /**
      * 

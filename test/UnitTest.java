@@ -46,16 +46,12 @@ public class UnitTest {
         assertTrue(test.datumSyntaxVerifizieren(dtf.format(localDate)));
 
         // Tage
-        // assertFalse(test.datumTageVerifizieren("32.05.1980"));
-        assertFalse(test.datumTageVerifizieren("00.05.1980"));
+         assertFalse(test.datumTageVerifizieren("00.05.1980"));
         // Monate
         assertFalse(test.datumMonateVerifizieren("12.13.1980"));
-        // assertFalse(test.datumMonateVerifizieren("12.12.2021"));
-        assertFalse(test.datumMonateVerifizieren("12.00.1980"));
-        // assertFalse(test.datumMonateVerifizieren("12.12.0000"));
+          assertFalse(test.datumMonateVerifizieren("12.00.1980"));
         // Zukunft
-        // String datumHeute = heute.format(heute);
-        assertFalse(test.datumTagZukunft(dtf.format(localDate)));
+       assertFalse(test.datumTagZukunft(dtf.format(localDate)));
     }
 
 }

@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -14,17 +15,20 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+
 import javax.swing.JLabel;
+import java.awt.Color;
 
 public class GuiFrontend extends JFrame {
 
     /**
-     * Benutzeroberfl\\u00Eche
+     * Benutzeroberfläche
      */
     private static final long serialVersionUID = 2820930589816760577L;
     protected JPanel contentPane;
     protected JTextField txfHeute, txfGeburt, txfAusgabe;
-    protected JButton btnheute, btnVerifizieren, btnTageZaehlen, btnEnde, btnok, btnNochmal;
+    protected JButton btnheute, btnVerifizieren, btnTageZaehlen, btnEnde, btnok, btnNochmal, btnSpeichern;
     protected JLabel lblInfoTageZaehlen, lblInfoAllgemein, lblnfoDatumHeute, lblInfoDatumGeburt, lblAusgabeTage,
             lblInfoDatumVerifizieren, lblInfoVerifizierungOkay;
     protected int tagGeburt, monatGeburt, jahrGeburt;
@@ -34,10 +38,13 @@ public class GuiFrontend extends JFrame {
      * Create the frame.
      */
     public GuiFrontend() {
+        setForeground(new Color(102, 102, 204));
+        setBackground(new Color(204, 0, 255));
         setTitle("Der Geburt-Tage-Rechner");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 497, 522);
         contentPane = new JPanel();
+        contentPane.setBackground(new Color(102, 205, 170));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
@@ -60,6 +67,9 @@ public class GuiFrontend extends JFrame {
         getContentPane().add(txfAusgabe);
         getContentPane().add(lblInfoVerifizierungOkay);
         getContentPane().add(btnNochmal);
+        getContentPane().add(btnSpeichern);
+        
+        
 
     }
 
@@ -161,8 +171,28 @@ public class GuiFrontend extends JFrame {
                 txfGeburt.requestFocus();
                 txfGeburt.selectAll();
                 btnNochmal.setVisible(false);
+                
             }
         });
+        
+        /*
+         * Button Speichern
+         */
+        btnSpeichern = new JButton("Speichern");
+        btnSpeichern.setBounds(352, 383, 103, 23);
+        btnSpeichern.setVisible(false);
+        btnSpeichern.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser datenSpeichern = new JFileChooser();
+                datenSpeichern.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                int status = datenSpeichern.showSaveDialog(null);
+                    if (status == JFileChooser.APPROVE_OPTION) {
+                        File ausgewählteDatei = datenSpeichern.getSelectedFile();
+                    }
+            }
+
+        });
+        
 
         /*
          * Textfeld heute
@@ -201,8 +231,9 @@ public class GuiFrontend extends JFrame {
         btnVerifizieren.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent enter) {
                 datumverifizieren();
+                
             }
-        });
+       });
 
         /*
          * Button Tage berechnen
@@ -212,9 +243,10 @@ public class GuiFrontend extends JFrame {
         btnTageZaehlen.setVisible(false);
         btnTageZaehlen.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                tageZaehlen();
+             tageZaehlen();
             }
         });
+        
 
         /*
          * Textfeld Ausgabe
@@ -241,6 +273,16 @@ public class GuiFrontend extends JFrame {
             btnTageZaehlen.setVisible(true);
             lblInfoVerifizierungOkay.setVisible(true);
             lblInfoTageZaehlen.setVisible(true);
+            btnTageZaehlen.requestFocus();
+            btnTageZaehlen.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        tageZaehlen();
+                    }
+                }
+                
+            });
         } else {
             txfGeburt.requestFocus();
             txfGeburt.selectAll();
@@ -274,6 +316,7 @@ public class GuiFrontend extends JFrame {
         txfGeburt.selectAll();
         btnVerifizieren.setVisible(true);
         btnTageZaehlen.setVisible(false);
+        btnSpeichern.setVisible(true);
 
     }
 }

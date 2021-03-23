@@ -18,22 +18,12 @@ import javax.swing.JPanel;
 
 public class Backend extends JFrame {
     
-    protected JPanel contentPane;
+    
     private String dateiname = "." + File.separator + "\\temp.txt";     
    
     
     public Backend () {
-        setTitle("Historie");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setBounds(600, 100, 300, 200);
-        setVisible(true);
-        setResizable(false);
         
-        contentPane = new JPanel();
-        contentPane.setBackground(new Color(102, 205, 170));
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
         
         
         

@@ -130,6 +130,7 @@ public class GuiFrontend extends JFrame {
 
         /*
          * Button heute
+         * Beim Klicken des Button btnheute wird das aktuelle Datum im Textfeld txfheute ausgegeben
          */
         btnheute = new JButton("heutiges Datum");
         btnheute.setBounds(92, 140, 150, 23);
@@ -142,6 +143,7 @@ public class GuiFrontend extends JFrame {
 
         /*
          * Button Ende
+         *  Beim Klicken des Button btnEnde wird das Hauptfenster geschlossen und das Programm beendet.
          */
         btnEnde = new JButton("Exit");
         btnEnde.setForeground(new Color(0, 0, 0));
@@ -155,6 +157,9 @@ public class GuiFrontend extends JFrame {
 
         /*
          * Button Nochmal
+         * Beim Klicken des Button btnNochmal wird eine temporäre Textdatei erstellt und die Parameter
+         * DatemHeute, DatumGeburtstag, Errechnete Tage gespeichert.
+         * Alle Parameter werden im Fenster genullt und es kann eine neue Eingabe vorgenommen werden.
          */
         btnNochmal = new JButton("Nochmal!");
         btnNochmal.setBounds(252, 435, 89, 23);
@@ -173,8 +178,8 @@ public class GuiFrontend extends JFrame {
                 
                 txfGeburt.requestFocus();
                 txfGeburt.selectAll();
-                //Backend bd = new Backend();
-                //bd.zwischenSpeichern(txfGeburt.getText(), txfHeute.getText(), txfAusgabe.getText());
+                Backend bd = new Backend();
+                bd.zwischenSpeichern(txfGeburt.getText(), txfHeute.getText(), txfAusgabe.getText());
                 
             }
         });
@@ -194,14 +199,16 @@ public class GuiFrontend extends JFrame {
         
         /*
          * Button Historie
+         * Beim Klicken des Button btnHistorie erscheint ein neues Fenster mit einer Liste 
+         * der eingegeben Parameter Datumheute, DatumGeburtstag, Errechnete Tage.
          */
         btnHistorie = new JButton ("Historie");
         btnHistorie.setBounds(252, 475, 89, 23);
         btnHistorie.setVisible(false);
         btnHistorie.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Backend bd = new Backend ();
-                bd.setVisible(true);
+                Historie hist = new Historie ();
+                hist.setVisible(true);
             }
         });
         

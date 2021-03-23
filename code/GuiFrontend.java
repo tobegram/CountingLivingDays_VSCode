@@ -28,7 +28,7 @@ public class GuiFrontend extends JFrame {
     private static final long serialVersionUID = 2820930589816760577L;
     protected JPanel contentPane;
     protected JTextField txfHeute, txfGeburt, txfAusgabe;
-    protected JButton btnheute, btnVerifizieren, btnTageZaehlen, btnEnde, btnok, btnNochmal, btnSpeichern;
+    protected JButton btnheute, btnVerifizieren, btnTageZaehlen, btnEnde, btnok, btnNochmal, btnSpeichern, btnHistorie;
     protected JLabel lblInfoTageZaehlen, lblInfoAllgemein, lblnfoDatumHeute, lblInfoDatumGeburt, lblAusgabeTage,
             lblInfoDatumVerifizieren, lblInfoVerifizierungOkay;
     protected int tagGeburt, monatGeburt, jahrGeburt;
@@ -38,11 +38,9 @@ public class GuiFrontend extends JFrame {
      * Create the frame.
      */
     public GuiFrontend() {
-        setForeground(new Color(102, 102, 204));
-        setBackground(new Color(204, 0, 255));
         setTitle("Der Geburt-Tage-Rechner");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 497, 522);
+        setBounds(100, 100, 523, 660);
         contentPane = new JPanel();
         contentPane.setBackground(new Color(102, 205, 170));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -68,9 +66,9 @@ public class GuiFrontend extends JFrame {
         getContentPane().add(lblInfoVerifizierungOkay);
         getContentPane().add(btnNochmal);
         getContentPane().add(btnSpeichern);
+        getContentPane().add(btnHistorie);
         
         
-
     }
 
     private void initComponents() {
@@ -86,11 +84,11 @@ public class GuiFrontend extends JFrame {
         lblInfoAllgemein.setVerticalAlignment(SwingConstants.TOP);
         lblInfoAllgemein.setBounds(10, 11, 286, 84);
         // Visible(false)
-        lblnfoDatumHeute = new JLabel("Bitte dr\u00FCck den Button \"heutiges Datum\"!");
+        lblnfoDatumHeute = new JLabel("Bitte drück den Button \"heutiges Datum\"!");
         lblnfoDatumHeute.setBounds(10, 106, 359, 23);
         lblnfoDatumHeute.setVisible(false);
         // Visible(false)
-        lblInfoDatumGeburt = new JLabel("Bitte gib im n\\u00E4chsten Feld Deinen Geburtstag ein!");
+        lblInfoDatumGeburt = new JLabel("Bitte gib im nächsten Feld Deinen Geburtstag ein!");
         lblInfoDatumGeburt.setBounds(10, 167, 359, 23);
         lblInfoDatumGeburt.setVisible(false);
         // Visible(false)
@@ -146,7 +144,9 @@ public class GuiFrontend extends JFrame {
          * Button Ende
          */
         btnEnde = new JButton("Exit");
-        btnEnde.setBounds(366, 435, 89, 23);
+        btnEnde.setForeground(new Color(0, 0, 0));
+        btnEnde.setBackground(new Color(0, 128, 0));
+        btnEnde.setBounds(394, 587, 103, 23);
         btnEnde.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
@@ -157,7 +157,7 @@ public class GuiFrontend extends JFrame {
          * Button Nochmal
          */
         btnNochmal = new JButton("Nochmal!");
-        btnNochmal.setBounds(267, 435, 89, 23);
+        btnNochmal.setBounds(252, 435, 89, 23);
         btnNochmal.setVisible(false);
         btnNochmal.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -168,9 +168,13 @@ public class GuiFrontend extends JFrame {
                 btnTageZaehlen.setVisible(false);
                 lblAusgabeTage.setVisible(false);
                 txfAusgabe.setVisible(false);
+                btnHistorie.setVisible(true);
+                btnNochmal.setVisible(false);
+                
                 txfGeburt.requestFocus();
                 txfGeburt.selectAll();
-                btnNochmal.setVisible(false);
+                //Backend bd = new Backend();
+                //bd.zwischenSpeichern(txfGeburt.getText(), txfHeute.getText(), txfAusgabe.getText());
                 
             }
         });
@@ -179,21 +183,28 @@ public class GuiFrontend extends JFrame {
          * Button Speichern
          */
         btnSpeichern = new JButton("Speichern");
-        btnSpeichern.setBounds(352, 383, 103, 23);
+        btnSpeichern.setBounds(394, 475, 103, 23);
         btnSpeichern.setVisible(false);
         btnSpeichern.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JFileChooser datenSpeichern = new JFileChooser();
-                datenSpeichern.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                int status = datenSpeichern.showSaveDialog(null);
-                    if (status == JFileChooser.APPROVE_OPTION) {
-                        File ausgewählteDatei = datenSpeichern.getSelectedFile();
-                    }
+                Backend bd = new Backend();
+                bd.speichern();
             }
-
         });
         
-
+        /*
+         * Button Historie
+         */
+        btnHistorie = new JButton ("Historie");
+        btnHistorie.setBounds(252, 475, 89, 23);
+        btnHistorie.setVisible(false);
+        btnHistorie.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Backend bd = new Backend ();
+                bd.setVisible(true);
+            }
+        });
+        
         /*
          * Textfeld heute
          */

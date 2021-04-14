@@ -207,8 +207,14 @@ public class GuiFrontend extends JFrame {
         btnHistorie.setVisible(false);
         btnHistorie.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Historie hist = new Historie ();
-                hist.setVisible(true);
+               try {
+                   Historie hist = new Historie (txfGeburt.getText(), txfHeute.getText(), txfAusgabe.getText() );
+                   hist.setVisible(true);
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+                
+                
             }
         });
         

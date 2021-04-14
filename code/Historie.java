@@ -6,50 +6,62 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JList;
 
-public class Historie  {
+public class Historie extends JFrame {
     
-    private JFrame frame;
+    private JFrame frameHistorie;
     protected JPanel contentPane; 
     protected JButton btnEnde; 
-    private JTextArea taListe;
-    private JScrollPane sclListe;
+    private DefaultListModel<String> historieModel;
     
-    public Historie () {
-        JFrame frame = new JFrame();
-        frame.setTitle("Historie");
-        frame.setBounds(600, 100, 300, 200);
-        frame.setVisible(true);
-        frame.setResizable(false);
-        
+    
+    public Historie (String geburtstag, String heute, String tageGezählt) {
+        setTitle("Historie");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setBounds(100, 100, 358, 317);
+        getContentPane().setLayout(null);
         
         contentPane = new JPanel();
         contentPane.setBackground(new Color(102, 205, 170));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        frame.setContentPane(contentPane);
+        setContentPane(contentPane);
         contentPane.setLayout(null);
+        
         
         btnEnde = new JButton("Ende");
         btnEnde.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                frame.setDefaultCloseOperation(0);
+                System.exit(0);
             }
         });
-        btnEnde.setBounds(185, 127, 89, 23);
+        btnEnde.setBounds(230, 230, 89, 23);
         contentPane.add(btnEnde);
         
-        taListe = new JTextArea();
-        taListe.setBounds(10, 25, 235, 91);
-        contentPane.add(taListe);
-        taListe.setVisible(true);
-        taListe.setLineWrap(true);
-        sclListe = new JScrollPane(taListe);
-        sclListe.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        JLabel lblHistorie = new JLabel("Historie");
+        lblHistorie.setHorizontalAlignment(SwingConstants.CENTER);
+        lblHistorie.setBounds(75, 45, 168, 23);
+        contentPane.add(lblHistorie);
+        
+        JList listHistorie = new JList();
+        listHistorie.setForeground(Color.WHITE);
+        listHistorie.setBackground(Color.WHITE);
+        listHistorie.setBounds(327, 90, -297, 68);
+        contentPane.add(listHistorie);
+        listHistorie.setVisible(true);
+        
+        historieModel = new DefaultListModel<String>();
+        historieModel.addElement(geburtstag + "      " + 
+                                 heute + "      "  +
+                                    tageGezählt);
         
         
     }

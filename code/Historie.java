@@ -26,7 +26,7 @@ public class Historie extends JFrame {
     
     public Historie (String geburtstag, String heute, String tageGezählt) {
         setTitle("Historie");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
         setBounds(100, 100, 358, 317);
         getContentPane().setLayout(null);
         
@@ -40,7 +40,20 @@ public class Historie extends JFrame {
         btnEnde = new JButton("Ende");
         btnEnde.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                dispose();
+                GuiFrontend gf = new GuiFrontend();
+                gf.lblInfoDatumVerifizieren.setVisible(true);
+                gf.lblInfoVerifizierungOkay.setVisible(false);
+                gf.lblInfoTageZaehlen.setVisible(false);
+                gf.btnVerifizieren.setVisible(true);
+                gf.btnTageZaehlen.setVisible(false);
+                gf.lblAusgabeTage.setVisible(false);
+                gf.txfAusgabe.setVisible(false);
+                gf.btnHistorie.setVisible(true);
+                gf.btnNochmal.setVisible(false);
+                
+                gf.txfGeburt.requestFocus();
+                gf.txfGeburt.selectAll();
             }
         });
         btnEnde.setBounds(230, 230, 89, 23);
@@ -51,17 +64,16 @@ public class Historie extends JFrame {
         lblHistorie.setBounds(75, 45, 168, 23);
         contentPane.add(lblHistorie);
         
+                
         JList listHistorie = new JList();
-        listHistorie.setForeground(Color.WHITE);
-        listHistorie.setBackground(Color.WHITE);
-        listHistorie.setBounds(327, 90, -297, 68);
+        listHistorie.setBounds(33, 79, 279, 106);
         contentPane.add(listHistorie);
         listHistorie.setVisible(true);
-        
         historieModel = new DefaultListModel<String>();
+        listHistorie.setModel(historieModel);
         historieModel.addElement(geburtstag + "      " + 
                                  heute + "      "  +
-                                    tageGezählt);
+                                    tageGezählt + "   Tage");
         
         
     }

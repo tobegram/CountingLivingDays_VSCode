@@ -19,11 +19,13 @@ import java.io.File;
 
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GuiFrontend extends JFrame {
 
-    /**
-     * Benutzeroberfläche
+    /*
+     * Initialisieren der Variablen
      */
     private static final long serialVersionUID = 2820930589816760577L;
     protected JPanel contentPane;
@@ -33,7 +35,16 @@ public class GuiFrontend extends JFrame {
             lblInfoDatumVerifizieren, lblInfoVerifizierungOkay;
     protected int tagGeburt, monatGeburt, jahrGeburt;
     protected boolean korrekt1;
+    
 
+    /**
+     * Erzeugen aller Objekte
+     */
+    Verifikation vn = new Verifikation();
+    LocalDate heute = LocalDate.now();
+    Backend bd = new Backend();
+    Historie hist = new Historie();
+    
     /**
      * Create the frame.
      */
@@ -175,11 +186,17 @@ public class GuiFrontend extends JFrame {
                 txfAusgabe.setVisible(false);
                 btnHistorie.setVisible(true);
                 btnNochmal.setVisible(false);
-                
                 txfGeburt.requestFocus();
                 txfGeburt.selectAll();
-                Backend bd = new Backend();
-                bd.zwischenSpeichern(txfGeburt.getText(), txfHeute.getText(), txfAusgabe.getText());
+                
+                
+                try {
+                    
+                    bd.zwischenSpeichern(txfGeburt.getText(), txfHeute.getText(), txfAusgabe.getText());
+                } catch (Exception e2) {
+                    e2.getStackTrace();
+                }
+                
                 
             }
         });
@@ -207,14 +224,15 @@ public class GuiFrontend extends JFrame {
         btnHistorie.setVisible(false);
         btnHistorie.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               try {
-                   Historie hist = new Historie (txfGeburt.getText(), txfHeute.getText(), txfAusgabe.getText() );
+                hist.setGeburtstag(txfGeburt.getText());
+                hist.setHeute(txfHeute.getText());
+                hist.settagegezählt(txfAusgabe.getText());
+                try {
+                    
                    hist.setVisible(true);
-            } catch (Exception e2) {
+                } catch (Exception e2) {
                 e2.printStackTrace();
-            }
-                
-                
+                  }
             }
         });
         
@@ -245,7 +263,12 @@ public class GuiFrontend extends JFrame {
                 }
             }
         });
-
+        txfGeburt.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                txfGeburt.selectAll();
+            }
+        });
         /*
          * Button Verifizieren
          */
@@ -289,9 +312,7 @@ public class GuiFrontend extends JFrame {
      * Geburtstages. Die Methode wird in dieser Klasse nur aufgerufen. Es gibt eine
      * eigene Verifikationsklasse, um dass Datum zu prüfen.
      */
-    Verifikation vn = new Verifikation();
-
-    private void datumverifizieren() {
+     private void datumverifizieren() {
         if (vn.datumVerifizieren(txfGeburt.getText()) == true) {
             btnVerifizieren.setVisible(false);
             btnTageZaehlen.setVisible(true);
@@ -316,9 +337,7 @@ public class GuiFrontend extends JFrame {
     /**
      * Methode, um das heutige Datum auszugeben
      */
-    LocalDate heute = LocalDate.now();
-
-    private void datumHeuteAusgeben() {
+     private void datumHeuteAusgeben() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String datumHeute = dtf.format(heute);
         txfHeute.setText(datumHeute);

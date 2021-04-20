@@ -28,35 +28,11 @@ public class Historie extends JFrame {
     private String  geburtstag,  heute, tageGezählt;
     
     
-    /*
-     * Setters and Getters
-     */
-    public String getGeburtstag() {
-        return geburtstag;
-    }
-    public void setGeburtstag(String geburtstag) {
-        this.geburtstag = geburtstag;
-    }
-    public String getHeute() {
-        return heute;
-    }
-    public void setHeute(String heute) {
-        this.heute = heute;
-    }
-    public String gettageGezählt() {
-        return tageGezählt;
-    }
-    public void settagegezählt (String tagegezählt) {
-        this.tageGezählt = tagegezählt;
-    }
-
-
-
-
+ 
     public Historie () {
         setTitle("Historie");
         setDefaultCloseOperation(HIDE_ON_CLOSE);
-        setBounds(100, 100, 358, 317);
+        setBounds(100, 100, 353, 317);
         getContentPane().setLayout(null);
         
         contentPane = new JPanel();
@@ -100,10 +76,17 @@ public class Historie extends JFrame {
         listHistorie.setVisible(true);
         historieModel = new DefaultListModel<String>();
         listHistorie.setModel(historieModel);
-        historieModel.addElement(geburtstag + "      " + 
-                                 heute + "      "  +
-                                    tageGezählt + "   Tage");
         
         
+              
     }
+    public void uebernehmen (String geburtstag, String heute, String tageGezählt) {
+            historieModel.addElement(geburtstag + "      " + 
+                    heute + "      "  +
+                       tageGezählt + "   Tage");
+        }
+    
+    
 }
+
+

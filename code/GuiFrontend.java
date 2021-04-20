@@ -184,7 +184,6 @@ public class GuiFrontend extends JFrame {
                 btnTageZaehlen.setVisible(false);
                 lblAusgabeTage.setVisible(false);
                 txfAusgabe.setVisible(false);
-                btnHistorie.setVisible(true);
                 btnNochmal.setVisible(false);
                 txfGeburt.requestFocus();
                 txfGeburt.selectAll();
@@ -223,12 +222,11 @@ public class GuiFrontend extends JFrame {
         btnHistorie.setBounds(252, 475, 89, 23);
         btnHistorie.setVisible(false);
         btnHistorie.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                hist.setGeburtstag(txfGeburt.getText());
-                hist.setHeute(txfHeute.getText());
-                hist.settagegezählt(txfAusgabe.getText());
+                
                 try {
-                    
+                    hist.uebernehmen(txfGeburt.getText(), txfHeute.getText(), txfAusgabe.getText()); 
                    hist.setVisible(true);
                 } catch (Exception e2) {
                 e2.printStackTrace();
@@ -291,6 +289,7 @@ public class GuiFrontend extends JFrame {
         btnTageZaehlen.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
              tageZaehlen();
+             
             }
         });
         
@@ -360,6 +359,7 @@ public class GuiFrontend extends JFrame {
         btnVerifizieren.setVisible(true);
         btnTageZaehlen.setVisible(false);
         btnSpeichern.setVisible(true);
+        btnHistorie.setVisible(true);
 
     }
 }
